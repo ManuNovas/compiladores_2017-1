@@ -1,0 +1,6 @@
+id,a
+opAsig,=
+entero,34
+id,b
+id,!
+entero,50

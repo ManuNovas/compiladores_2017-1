@@ -1,0 +1,18 @@
+<coment,/* comentario */>
+<id,a>
+<opAsig,=>
+<entero,345>
+<id,f>
+<opAsig,=>
+<real,3.14>
+<id,a>
+<opRel,<=>
+<id,b>
+<id,c>
+<opAsig,=>
+<id,a>
+<opArit,+>
+<id,b>
+<id,f>
+<opRel,<>
+<id,g>
