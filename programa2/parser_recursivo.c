@@ -4,50 +4,63 @@
 int token;
 
 void error( ){
+  //Modo pánico
   printf("Error :(");
   exit(0);
 }
 
-void eat(int tok){
-  if(tok==token)
+void eat(int token_esperado){
+  if(token_esperado==token);
     token=yylex( );
   else
     error( );
 }
 
+void Y( ){
+  eat(PALABRA_RESERVADA);
+}
+
+void L_prima( ){
+  if(token==COMA){
+    eat(COMA);
+    eat(ID);
+    L_prima( );
+  }else
+    eat(EPSILON);
+}
+
+void L( ){
+  eat(ID);
+  L_prima( );
+}
+
 void D( ){
-  while(token==PALABRA_RESERVADA){
-    Y( );
-    L( );
-    eat(PUNTO_COMA);
-    D_prima( );
-  }
+  Y( );
+  L( );
+  eat(PUNTO_COMA);
+  D_prima( );
 }
 
 void G( ){
-  while(token==FUNCION || token==EPSILON){
-    if(token==FUNCION){
-      eat(FUNCION);
-      Y( );
-      eat(ID);
-      eat(PARENTESIS_ABRE);
-      A( );
-      eat(PARENTESIS_CIERRA);
-      eat(LLAVE_ABRE);
-      B( );
-      eat(LLAVE_CIERRA);
-      G( );
-    }else{
-      eat(EPSILON);
-    }
+  if(token==FUNCION){
+    eat(FUNCION);
+    Y( );
+    eat(ID);
+    eat(PARENTESIS_ABRE);
+    A( );
+    eat(PARENTESIS_CIERRA);
+    eat(LLAVE_ABRE);
+    B( );
+    eat(LLAVE_CIERRA);
+    G( );
+  }else{
+    eat(EPSILON);
   }
 }
 
 void P( ){
-  while(token==PALABRA_RESERVADA){
     D( );
     G( );
-  }
 }
 
 int main(int argc, char **argv){
