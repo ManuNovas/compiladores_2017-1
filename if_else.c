@@ -61,13 +61,8 @@ int convertidor(char c){
     return 17;
   else if(c=='.')
     return 18;
-  else if(c==' ' || c=='\n' || c=='\t'){
-    if(c=='\n'){
-      l++;
-      c=0;
-    }
+  else if(c==' ' || c=='\n' || c=='\t')
     return 19;
-  }
 }
 
 //Función que agrega símbolo a la tabla y verifica que no haya duplicados
@@ -132,13 +127,21 @@ void token(int e, char *b){
     printf("<5, %s>\n", b);
   else if(e==10)
     printf("<2, %s>\n", b);
-  else if(e==11)
-    printf("<6, %s>\n", b);
+  else if(e==11){
+    if(atoi(b)<1000)
+      printf("<6, %s>\n", b);
+    else
+      printf("Longitud del token entero maxima excedia\n");
+  }
   else if(e==12){
     printf("<0, %s>\n", b);
     agregaSimbolo(0, b);
-  }else if(e==19)
-    printf("<7, %s>\n", b);
+  }else if(e==19){
+    if(atof(b)<100)
+      printf("<7, %s>\n", b);
+    else
+      printf("Longitud del token flotante maxima excedida\n");
+  }
   else if(e==24)
     printf("<9, >\n");
   else if(e==25)
@@ -196,6 +199,10 @@ void main(int argc, char **argv){
   buffer[0]='\0';
   caracter=fgetc(entrada);
   do{
+    if(caracter=='\n'){
+      l++;
+      c=0;
+    }
     selector=convertidor(caracter);
     actual=siguiente;
     siguiente=automata[actual][selector];
@@ -203,7 +210,9 @@ void main(int argc, char **argv){
     //Manejo de errores
     if(siguiente==-1){
       printf("Error en el caracter %i de la linea %i\n", c, l);
+      buffer[0]='\0';
       caracter=fgetc(entrada);
+      c++;
       siguiente=0;
     }else if(siguiente!=0){
       //Guardando caracter en buffer y leyendo siguiente caracter
@@ -211,6 +220,7 @@ void main(int argc, char **argv){
       temporal[1]='\0';
       strcat(buffer, temporal);
       caracter=fgetc(entrada);
+      c++;
     }else if(siguiente==0){
       //Análisis del estado de aceptación
       token(actual, buffer);
