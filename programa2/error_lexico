@@ -1,0 +1,7 @@
+int 1a;
+func float mi_funcion(char args){
+	if(a)
+		return 0;
+	else
+		return 1;
+}

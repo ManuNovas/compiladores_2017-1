@@ -1,5 +1,5 @@
 #define PUNTO_COMA 0
-#define EPSILON 1
+#define RETORNA 1
 #define PALABRA_RESERVADA 2
 #define ID 3
 #define FUNCION 4
